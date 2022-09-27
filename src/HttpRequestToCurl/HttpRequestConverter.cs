@@ -8,6 +8,7 @@ public static class HttpRequestConverter
     private const string CurlCommand = "curl ";
     private const string MethodFlag = "--request ";
     private const string HeaderFlag = "--header ";
+    private const string DataFlag = "--data ";
     
     public static string ConvertToCurl(HttpRequestMessage request)
     {
@@ -25,6 +26,9 @@ public static class HttpRequestConverter
                 sb.Append(HeaderToString(header));
             }    
         }
+
+        if (request.Content != null)
+            sb.Append(ContentToString(request.Content));
 
         sb.AddWhitespace();
         sb.Append(request.RequestUri);
@@ -56,5 +60,12 @@ public static class HttpRequestConverter
         sb.Append('"');
 
         return sb.ToString();
+    }
+
+    private static string ContentToString(HttpContent content)
+    {
+        string body = content.ReadAsStringAsync().Result;
+
+        throw new NotImplementedException();
     }
 }

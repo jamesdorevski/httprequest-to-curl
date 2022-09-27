@@ -1,3 +1,6 @@
+using System.Net.Mime;
+using System.Text;
+
 namespace HttpRequestToCurl.Tests;
 
 public class HttpRequestConverterTests
@@ -8,7 +11,8 @@ public class HttpRequestConverterTests
         var request = new HttpRequestMessage
         {
             RequestUri = new Uri("http://dog-api.kinduff.com/api/facts?raw=true"),
-            Method = HttpMethod.Get
+            Method = HttpMethod.Get,
+            Content = new StringContent("Hi there!", Encoding.UTF8, MediaTypeNames.Text.Plain)
         };
         
         request.Headers.Add("X-Hello", "world");
