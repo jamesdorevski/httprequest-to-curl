@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using HttpRequestToCurl.Extensions;
 
 namespace HttpRequestToCurl;
 
@@ -14,7 +15,8 @@ public static class HttpRequestConverter
 
         sb.Append(CurlCommand);
         sb.Append(MethodFlag);
-        sb.Append(request.Method.ToString() + ' ');
+        sb.Append(request.Method);
+        sb.AddWhitespace();
 
         if (request.Headers.Any())
         {
@@ -24,7 +26,8 @@ public static class HttpRequestConverter
             }    
         }
 
-        sb.Append(' ' + request.RequestUri!.ToString());
+        sb.AddWhitespace();
+        sb.Append(request.RequestUri);
 
         return sb.ToString();
     }
@@ -35,7 +38,8 @@ public static class HttpRequestConverter
 
         sb.Append(HeaderFlag);
         sb.Append('"');
-        sb.Append(header.Key + ": ");
+        sb.Append(header.Key + ":");
+        sb.AddWhitespace();
 
         if (header.Value.Count() > 1)
         {
