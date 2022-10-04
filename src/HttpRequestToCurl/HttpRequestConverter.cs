@@ -12,6 +12,11 @@ public static class HttpRequestConverter
     
     public static string ConvertToCurl(HttpRequestMessage request)
     {
+        return ConvertToCurl(request, null);
+    }
+
+    public static string ConvertToCurl(HttpRequestMessage request, HttpReqestConverterSettings? settings)
+    {
         var sb = new StringBuilder();
 
         sb.Append(CurlCommand);
