@@ -1,11 +1,11 @@
 namespace HttpRequestToCurl.Models;
 
 
-public class HttpReqestConverterSettings 
+public class HttpRequestConverterSettings 
 {
     internal const bool DefaultIgnoreSensitiveInformation = true;
 
-    internal bool? _ignoreSensitiveInformation;
+    private bool? _ignoreSensitiveInformation;
 
     public bool IgnoreSensitiveInformation
     {

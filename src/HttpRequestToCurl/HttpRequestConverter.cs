@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using HttpRequestToCurl.Extensions;
+using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl;
 
@@ -9,16 +10,17 @@ public static class HttpRequestConverter
     private const string MethodFlag = "--request ";
     private const string HeaderFlag = "--header ";
     private const string DataFlag = "--data ";
-    
-    public static string ConvertToCurl(HttpRequestMessage request)
+    //TODO: to remove
+    private static readonly string[] SensitiveHeaders = 
     {
-        return ConvertToCurl(request, null);
-    }
+        "Authorization"
+    };
 
-    public static string ConvertToCurl(HttpRequestMessage request, HttpReqestConverterSettings? settings)
+    public static string ConvertToCurl(HttpRequestMessage request, HttpRequestConverterSettings? settings = null)
     {
         var sb = new StringBuilder();
-
+        settings ??= new HttpRequestConverterSettings();
+        
         sb.Append(CurlCommand);
         sb.Append(MethodFlag);
         sb.Append(request.Method);
@@ -28,7 +30,8 @@ public static class HttpRequestConverter
         {
             foreach (var header in request.Headers)
             {
-                sb.Append(HeaderToString(header));
+                string? headerString = HeaderToString(header, settings);                
+                if (headerString != null) sb.Append(headerString);
             }    
         }
 
@@ -41,9 +44,12 @@ public static class HttpRequestConverter
         return sb.ToString();
     }
 
-    private static string HeaderToString(KeyValuePair<string, IEnumerable<string>> header)
+    private static string? HeaderToString(KeyValuePair<string, IEnumerable<string>> header, HttpRequestConverterSettings settings)
     {
         var sb = new StringBuilder();
+        
+        if (settings.IgnoreSensitiveInformation && header.Key.EqualsAny(SensitiveHeaders))
+            return null;
 
         sb.Append(HeaderFlag);
         sb.Append('"');
