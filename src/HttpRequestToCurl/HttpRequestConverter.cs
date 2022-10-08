@@ -10,7 +10,8 @@ public static class HttpRequestConverter
     private const string MethodFlag = "--request ";
     private const string HeaderFlag = "--header ";
     private const string DataFlag = "--data ";
-    //TODO: to remove
+
+    //TODO: add to appsettings
     private static readonly string[] SensitiveHeaders = 
     {
         "Authorization"
@@ -26,6 +27,9 @@ public static class HttpRequestConverter
         sb.Append(request.Method);
         sb.AddWhitespace();
 
+        sb.Append(request.RequestUri);
+        sb.AddWhitespace();
+        
         if (request.Headers.Any())
         {
             foreach (var header in request.Headers)
@@ -35,11 +39,7 @@ public static class HttpRequestConverter
             }    
         }
 
-        if (request.Content != null)
-            sb.Append(ContentToString(request.Content));
-
-        sb.AddWhitespace();
-        sb.Append(request.RequestUri);
+        if (request.Content != null) sb.Append(ContentToString(request.Content));
 
         return sb.ToString();
     }
@@ -69,14 +69,25 @@ public static class HttpRequestConverter
         }
 
         sb.Append('"');
+        
+        sb.AddWhitespace();
 
         return sb.ToString();
     }
 
     private static string ContentToString(HttpContent content)
     {
+        var sb = new StringBuilder();        
         string body = content.ReadAsStringAsync().Result;
+        
+        sb.Append(DataFlag);
+        
+        sb.Append('"');
+        sb.Append(body);
+        sb.Append('"');
+        
+        sb.AddWhitespace();
 
-        throw new NotImplementedException();
+        return sb.ToString();
     }
 }
