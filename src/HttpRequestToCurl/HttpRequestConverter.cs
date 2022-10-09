@@ -15,10 +15,10 @@ public static class HttpRequestConverter
 	{
 		var sb = new StringBuilder();
 		settings ??= new HttpRequestConverterSettings();
-		
+
 		foreach (var handler in Handlers.Where(h => h.CanHandle(request)))
 			handler.Handle(request, settings, ref sb);
-		
+
 		return sb.ToString();
 	}
 }

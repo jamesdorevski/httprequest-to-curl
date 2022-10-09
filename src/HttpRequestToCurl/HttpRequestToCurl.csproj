@@ -11,5 +11,5 @@
             <_Parameter1>HttpRequestToCurl.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-    
+
 </Project>

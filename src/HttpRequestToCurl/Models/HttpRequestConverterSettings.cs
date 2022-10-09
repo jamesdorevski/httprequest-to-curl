@@ -3,13 +3,13 @@ namespace HttpRequestToCurl.Models;
 public class HttpRequestConverterSettings
 {
 	private const bool DefaultIgnoreSensitiveInformation = true;
-	private const bool DefaultAllowInsecureConnection = false;
-
+	private const bool DefaultAllowInsecureConnections = false;
+	
+	private bool? _allowInsecureConnections;
 	private bool? _ignoreSensitiveInformation;
-	private bool? _allowInsecureConnection;
 
 	/// <summary>
-	/// Excludes the Authorization header from the cURL command.
+	///     Excludes the Authorization header from the cURL command.
 	/// </summary>
 	public bool IgnoreSensitiveInformation
 	{
@@ -18,11 +18,11 @@ public class HttpRequestConverterSettings
 	}
 
 	/// <summary>
-	/// Adds the insecure flag to the command to allow for insecure connections.
+	///     Adds the insecure flag to the command to allow for insecure connections.
 	/// </summary>
-	public bool AllowInsecureConnection
+	public bool AllowInsecureConnections
 	{
-		get => _allowInsecureConnection ?? DefaultAllowInsecureConnection;
-		set => _allowInsecureConnection = value;
+		get => _allowInsecureConnections ?? DefaultAllowInsecureConnections;
+		set => _allowInsecureConnections = value;
 	}
 }

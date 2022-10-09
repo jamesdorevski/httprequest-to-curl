@@ -18,11 +18,11 @@ public class HttpRequestConverterTests
 
 		request.Headers.Add("X-Hello", "world");
 
-		string actual = HttpRequestConverter.ConvertToCurl(request, new HttpRequestConverterSettings
+		var actual = HttpRequestConverter.ConvertToCurl(request, new HttpRequestConverterSettings
 		{
-			AllowInsecureConnection = true
+			AllowInsecureConnections = true
 		});
-		
+
 		Assert.NotEmpty(actual);
 	}
 }

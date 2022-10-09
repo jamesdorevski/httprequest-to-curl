@@ -6,12 +6,15 @@ namespace HttpRequestToCurl.Handlers;
 
 internal class HeadersHandler : IHandler
 {
-	private static readonly string[] SensitiveHeaders = 
+	private static readonly string[] SensitiveHeaders =
 	{
 		"Authorization"
 	};
-	
-	public bool CanHandle(HttpRequestMessage request) => request.Headers.Any();
+
+	public bool CanHandle(HttpRequestMessage request)
+	{
+		return request.Headers.Any();
+	}
 
 	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
@@ -32,7 +35,7 @@ internal class HeadersHandler : IHandler
 		sb.AppendWhitespace();
 
 		if (header.Value.Count() > 1)
-			foreach (string value in header.Value)
+			foreach (var value in header.Value)
 				sb.Append(value + ',');
 		else
 			sb.Append(header.Value.First());

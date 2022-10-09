@@ -8,8 +8,11 @@ namespace HttpRequestToCurl.Handlers;
 internal class ContentHandler : IHandler
 {
 	private const string DataFlag = "--data ";
-	
-	public bool CanHandle(HttpRequestMessage request) => request.Content != null;
+
+	public bool CanHandle(HttpRequestMessage request)
+	{
+		return request.Content != null;
+	}
 
 	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
@@ -24,13 +27,13 @@ internal class ContentHandler : IHandler
 		sb.AppendSingleQuote();
 		sb.Append("Content-Type: " + contentHeaders.ContentType?.MediaType);
 		sb.AppendSingleQuote();
-		
+
 		sb.AppendWhitespace();
 	}
 
 	private static void ContentToString(HttpContent content, ref StringBuilder sb)
 	{
-		string body = content.ReadAsStringAsync().Result;
+		var body = content.ReadAsStringAsync().Result;
 
 		sb.Append(DataFlag);
 
@@ -39,7 +42,7 @@ internal class ContentHandler : IHandler
 		sb.Append(body);
 		sb.AppendDoubleQuote();
 		sb.AppendSingleQuote();
-		
+
 		sb.AppendWhitespace();
 	}
 }
