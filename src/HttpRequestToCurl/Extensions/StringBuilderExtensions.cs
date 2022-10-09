@@ -4,7 +4,7 @@ namespace HttpRequestToCurl.Extensions;
 
 internal static class StringBuilderExtensions
 {
-	internal static void AddWhitespace(this StringBuilder sb)
+	public static void AppendWhitespace(this StringBuilder sb)
 	{
 		sb.Append(' ');
 	}

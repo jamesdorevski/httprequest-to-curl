@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using HttpRequestToCurl.Extensions;
+using HttpRequestToCurl.Handlers;
 using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl;
@@ -11,6 +12,8 @@ public static class HttpRequestConverter
 	private const string HeaderFlag = "--header ";
 	private const string DataFlag = "--data ";
 
+	private static readonly IEnumerable<IHandler> Handlers;
+	
 	//TODO: add to appsettings
 	private static readonly string[] SensitiveHeaders =
 	{
@@ -25,10 +28,10 @@ public static class HttpRequestConverter
 		sb.Append(CurlCommand);
 		sb.Append(MethodFlag);
 		sb.Append(request.Method);
-		sb.AddWhitespace();
+		sb.AppendWhitespace();
 
 		sb.Append(request.RequestUri);
-		sb.AddWhitespace();
+		sb.AppendWhitespace();
 
 		if (request.Headers.Any())
 			foreach (var header in request.Headers)
@@ -53,7 +56,7 @@ public static class HttpRequestConverter
 		sb.Append(HeaderFlag);
 		sb.Append('"');
 		sb.Append(header.Key + ":");
-		sb.AddWhitespace();
+		sb.AppendWhitespace();
 
 		if (header.Value.Count() > 1)
 			foreach (var value in header.Value)
@@ -63,7 +66,7 @@ public static class HttpRequestConverter
 
 		sb.Append('"');
 
-		sb.AddWhitespace();
+		sb.AppendWhitespace();
 
 		return sb.ToString();
 	}
@@ -82,7 +85,7 @@ public static class HttpRequestConverter
 		sb.Append(body);
 		sb.Append('"');
 
-		sb.AddWhitespace();
+		sb.AppendWhitespace();
 
 		return sb.ToString();
 	}
