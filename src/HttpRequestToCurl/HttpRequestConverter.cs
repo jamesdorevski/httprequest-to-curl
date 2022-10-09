@@ -7,12 +7,14 @@ namespace HttpRequestToCurl;
 
 public static class HttpRequestConverter
 {
-	private const string CurlCommand = "curl ";
-	private const string MethodFlag = "--request ";
 	private const string HeaderFlag = "--header ";
 	private const string DataFlag = "--data ";
 
-	private static readonly IEnumerable<IHandler> Handlers;
+	// TODO - inject this 
+	private static readonly IEnumerable<IHandler> Handlers = new []
+	{
+		new BaseCurlCommandHandler()
+	};
 	
 	//TODO: add to appsettings
 	private static readonly string[] SensitiveHeaders =
@@ -24,15 +26,13 @@ public static class HttpRequestConverter
 	{
 		var sb = new StringBuilder();
 		settings ??= new HttpRequestConverterSettings();
-
-		sb.Append(CurlCommand);
-		sb.Append(MethodFlag);
-		sb.Append(request.Method);
-		sb.AppendWhitespace();
-
-		sb.Append(request.RequestUri);
-		sb.AppendWhitespace();
-
+		
+		foreach (var handler in Handlers.Where(h => h.CanHandle(request)))
+		{
+			string result = handler.Handle(request, settings);
+			sb.Append(result);
+		}
+		
 		if (request.Headers.Any())
 			foreach (var header in request.Headers)
 			{
