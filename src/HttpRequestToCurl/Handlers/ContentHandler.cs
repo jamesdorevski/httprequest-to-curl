@@ -25,9 +25,9 @@ internal class ContentHandler : IHandler
 	{
 		sb.Append(Constants.HeaderFlag);
 
-		sb.Append('"');
+		sb.AppendSingleQuote();
 		sb.Append("Content-Type: " + contentHeaders.ContentType?.MediaType);
-		sb.Append('"');
+		sb.AppendSingleQuote();
 		
 		sb.AppendWhitespace();
 	}
@@ -38,9 +38,9 @@ internal class ContentHandler : IHandler
 
 		sb.Append(DataFlag);
 
-		sb.Append('"');
+		sb.AppendSingleQuote();
 		sb.Append(body);
-		sb.Append('"');
+		sb.AppendSingleQuote();
 		
 		sb.AppendWhitespace();
 	}

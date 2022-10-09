@@ -35,7 +35,7 @@ internal class HeadersHandler : IHandler
 		if (settings.IgnoreSensitiveInformation && header.Key.EqualsAny(SensitiveHeaders)) return null;
 
 		sb.Append(HeaderFlag);
-		sb.Append('"');
+		sb.AppendSingleQuote();
 		sb.Append(header.Key + ':');
 		sb.AppendWhitespace();
 
@@ -45,7 +45,7 @@ internal class HeadersHandler : IHandler
 		else
 			sb.Append(header.Value.First());
 
-		sb.Append('"');
+		sb.AppendSingleQuote();
 		sb.AppendWhitespace();
 
 		return sb.ToString();

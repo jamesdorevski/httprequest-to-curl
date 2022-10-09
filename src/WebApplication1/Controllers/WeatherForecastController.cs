@@ -31,7 +31,7 @@ public class WeatherForecastController : ControllerBase
 	}
 
 	[HttpPost(Name = "PostWeatherForecase")]
-	public IEnumerable<WeatherForecast> Post(string body)
+	public IEnumerable<WeatherForecast> Post([FromBody] string body)
 	{
 		return Enumerable.Range(1, 5).Select(index => new WeatherForecast
 			{
