@@ -6,88 +6,84 @@ namespace HttpRequestToCurl;
 
 public static class HttpRequestConverter
 {
-    private const string CurlCommand = "curl ";
-    private const string MethodFlag = "--request ";
-    private const string HeaderFlag = "--header ";
-    private const string DataFlag = "--data ";
+	private const string CurlCommand = "curl ";
+	private const string MethodFlag = "--request ";
+	private const string HeaderFlag = "--header ";
+	private const string DataFlag = "--data ";
 
-    //TODO: add to appsettings
-    private static readonly string[] SensitiveHeaders = 
-    {
-        "Authorization"
-    };
+	//TODO: add to appsettings
+	private static readonly string[] SensitiveHeaders =
+	{
+		"Authorization"
+	};
 
-    public static string ConvertToCurl(HttpRequestMessage request, HttpRequestConverterSettings? settings = null)
-    {
-        var sb = new StringBuilder();
-        settings ??= new HttpRequestConverterSettings();
-        
-        sb.Append(CurlCommand);
-        sb.Append(MethodFlag);
-        sb.Append(request.Method);
-        sb.AddWhitespace();
+	public static string ConvertToCurl(HttpRequestMessage request, HttpRequestConverterSettings? settings = null)
+	{
+		var sb = new StringBuilder();
+		settings ??= new HttpRequestConverterSettings();
 
-        sb.Append(request.RequestUri);
-        sb.AddWhitespace();
-        
-        if (request.Headers.Any())
-        {
-            foreach (var header in request.Headers)
-            {
-                string? headerString = HeaderToString(header, settings);                
-                if (headerString != null) sb.Append(headerString);
-            }    
-        }
+		sb.Append(CurlCommand);
+		sb.Append(MethodFlag);
+		sb.Append(request.Method);
+		sb.AddWhitespace();
 
-        if (request.Content != null) sb.Append(ContentToString(request.Content));
+		sb.Append(request.RequestUri);
+		sb.AddWhitespace();
 
-        return sb.ToString();
-    }
+		if (request.Headers.Any())
+			foreach (var header in request.Headers)
+			{
+				var headerString = HeaderToString(header, settings);
+				if (headerString != null) sb.Append(headerString);
+			}
 
-    private static string? HeaderToString(KeyValuePair<string, IEnumerable<string>> header, HttpRequestConverterSettings settings)
-    {
-        var sb = new StringBuilder();
-        
-        if (settings.IgnoreSensitiveInformation && header.Key.EqualsAny(SensitiveHeaders))
-            return null;
+		if (request.Content != null) sb.Append(ContentToString(request.Content));
 
-        sb.Append(HeaderFlag);
-        sb.Append('"');
-        sb.Append(header.Key + ":");
-        sb.AddWhitespace();
+		return sb.ToString();
+	}
 
-        if (header.Value.Count() > 1)
-        {
-            foreach (string value in header.Value)
-            {
-                sb.Append(value + ',');
-            }
-        }
-        else
-        {
-            sb.Append(header.Value.First());
-        }
+	private static string? HeaderToString(KeyValuePair<string, IEnumerable<string>> header,
+		HttpRequestConverterSettings settings)
+	{
+		var sb = new StringBuilder();
 
-        sb.Append('"');
-        
-        sb.AddWhitespace();
+		if (settings.IgnoreSensitiveInformation && header.Key.EqualsAny(SensitiveHeaders))
+			return null;
 
-        return sb.ToString();
-    }
+		sb.Append(HeaderFlag);
+		sb.Append('"');
+		sb.Append(header.Key + ":");
+		sb.AddWhitespace();
 
-    private static string ContentToString(HttpContent content)
-    {
-        var sb = new StringBuilder();        
-        string body = content.ReadAsStringAsync().Result;
-        
-        sb.Append(DataFlag);
-        
-        sb.Append('"');
-        sb.Append(body);
-        sb.Append('"');
-        
-        sb.AddWhitespace();
+		if (header.Value.Count() > 1)
+			foreach (var value in header.Value)
+				sb.Append(value + ',');
+		else
+			sb.Append(header.Value.First());
 
-        return sb.ToString();
-    }
+		sb.Append('"');
+
+		sb.AddWhitespace();
+
+		return sb.ToString();
+	}
+
+	private static string ContentToString(HttpContent content)
+	{
+		var sb = new StringBuilder();
+		var body = content.ReadAsStringAsync().Result;
+
+		// Get headers from HttpContent as well
+		if (content.Headers.ContentType != null) sb.Append("Content-Type: " + content.Headers.ContentType.MediaType);
+
+		sb.Append(DataFlag);
+
+		sb.Append('"');
+		sb.Append(body);
+		sb.Append('"');
+
+		sb.AddWhitespace();
+
+		return sb.ToString();
+	}
 }
