@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using HttpRequestToCurl.Extensions;
 using HttpRequestToCurl.Handlers;
 using HttpRequestToCurl.Models;
 
@@ -7,14 +6,11 @@ namespace HttpRequestToCurl;
 
 public static class HttpRequestConverter
 {
-	// TODO - inject this 
-	private static readonly IEnumerable<IHandler> Handlers = new IHandler[]
-	{
-		new CommandHandler(),
-		new HeadersHandler(),
-		new ContentHandler(),
-	};
-	
+	private static readonly IEnumerable<IHandler> Handlers = AppDomain.CurrentDomain.GetAssemblies()
+		.SelectMany(x => x.GetTypes())
+		.Where(x => typeof(IHandler).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+		.Select(x => Activator.CreateInstance(x) as IHandler)!;
+
 	public static string ConvertToCurl(HttpRequestMessage request, HttpRequestConverterSettings? settings = null)
 	{
 		var sb = new StringBuilder();
