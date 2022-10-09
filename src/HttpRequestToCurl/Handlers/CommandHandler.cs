@@ -12,10 +12,8 @@ internal class CommandHandler : IHandler
 	
 	public bool CanHandle(HttpRequestMessage request) => true;
 	
-	public string Handle(HttpRequestMessage request, HttpRequestConverterSettings settings)
+	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
-		var sb = new StringBuilder();
-
 		sb.Append(CurlCommand);
 		
 		if (settings.AllowInsecureConnection) sb.Append(InsecureFlag);
@@ -29,7 +27,5 @@ internal class CommandHandler : IHandler
 		sb.AppendSingleQuote();
 		
 		sb.AppendWhitespace();
-
-		return sb.ToString();
 	}
 }

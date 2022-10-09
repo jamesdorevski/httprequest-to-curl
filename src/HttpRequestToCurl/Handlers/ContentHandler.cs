@@ -11,14 +11,10 @@ internal class ContentHandler : IHandler
 	
 	public bool CanHandle(HttpRequestMessage request) => request.Content != null;
 
-	public string Handle(HttpRequestMessage request, HttpRequestConverterSettings settings)
+	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
-		var sb = new StringBuilder();
-
 		if (request.Content != null) ContentHeadersToString(request.Content.Headers, ref sb);
 		ContentToString(request.Content!, ref sb);
-
-		return sb.ToString();
 	}
 
 	private static void ContentHeadersToString(HttpContentHeaders contentHeaders, ref StringBuilder sb)

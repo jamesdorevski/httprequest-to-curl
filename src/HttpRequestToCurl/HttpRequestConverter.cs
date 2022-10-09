@@ -18,8 +18,7 @@ public static class HttpRequestConverter
 		
 		foreach (var handler in Handlers.Where(h => h.CanHandle(request)))
 		{
-			string result = handler.Handle(request, settings);
-			sb.Append(result);
+			handler.Handle(request, settings, ref sb);
 		}
 		
 		return sb.ToString();
