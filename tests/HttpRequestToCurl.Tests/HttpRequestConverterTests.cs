@@ -13,7 +13,7 @@ public class HttpRequestConverterTests
 		{
 			RequestUri = new Uri("https://localhost:7126/WeatherForecast"),
 			Method = HttpMethod.Post,
-			Content = new StringContent("Hi there!", Encoding.UTF8, MediaTypeNames.Text.Plain)
+			Content = new StringContent("Hi there!", Encoding.UTF8, MediaTypeNames.Application.Json)
 		};
 
 		request.Headers.Add("X-Hello", "world");

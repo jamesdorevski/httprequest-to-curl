@@ -20,19 +20,17 @@ internal class HeadersHandler : IHandler
 		var sb = new StringBuilder();
 		
 		foreach (var header in request.Headers)
-		{
-			string? headerString = HeaderToString(header, settings);
-			if (headerString != null) sb.Append(headerString);
-		}
+			HeaderToString(header, settings, ref sb);
 
 		return sb.ToString();
 	}
 
-	private static string? HeaderToString(KeyValuePair<string, IEnumerable<string>> header, HttpRequestConverterSettings settings)
+	private static void HeaderToString(
+		KeyValuePair<string, IEnumerable<string>> header,
+		HttpRequestConverterSettings settings,
+		ref StringBuilder sb)
 	{
-		var sb = new StringBuilder();
-
-		if (settings.IgnoreSensitiveInformation && header.Key.EqualsAny(SensitiveHeaders)) return null;
+		if (settings.IgnoreSensitiveInformation && header.Key.EqualsAny(SensitiveHeaders)) return;
 
 		sb.Append(HeaderFlag);
 		sb.AppendSingleQuote();
@@ -47,7 +45,5 @@ internal class HeadersHandler : IHandler
 
 		sb.AppendSingleQuote();
 		sb.AppendWhitespace();
-
-		return sb.ToString();
 	}
 }

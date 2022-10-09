@@ -39,7 +39,9 @@ internal class ContentHandler : IHandler
 		sb.Append(DataFlag);
 
 		sb.AppendSingleQuote();
+		sb.AppendDoubleQuote();
 		sb.Append(body);
+		sb.AppendDoubleQuote();
 		sb.AppendSingleQuote();
 		
 		sb.AppendWhitespace();

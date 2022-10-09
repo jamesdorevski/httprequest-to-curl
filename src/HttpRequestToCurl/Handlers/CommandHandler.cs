@@ -24,7 +24,10 @@ internal class CommandHandler : IHandler
 		sb.Append(request.Method);
 		sb.AppendWhitespace();
 
+		sb.AppendSingleQuote();
 		sb.Append(request.RequestUri);
+		sb.AppendSingleQuote();
+		
 		sb.AppendWhitespace();
 
 		return sb.ToString();
