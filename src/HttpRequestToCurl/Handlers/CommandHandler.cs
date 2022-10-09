@@ -4,14 +4,14 @@ using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl.Handlers;
 
-internal class BaseCurlCommandHandler : IHandler
+internal class CommandHandler : IHandler
 {
 	private const string CurlCommand = "curl ";
 	private const string MethodFlag = "--request ";
 	
 	public bool CanHandle(HttpRequestMessage request) => true;
 	
-	public string Handle(HttpRequestMessage request, HttpRequestConverterSettings? converterSettings)
+	public string Handle(HttpRequestMessage request, HttpRequestConverterSettings settings)
 	{
 		var sb = new StringBuilder();
 

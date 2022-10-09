@@ -5,5 +5,5 @@ namespace HttpRequestToCurl.Handlers;
 internal interface IHandler
 {
 	public bool CanHandle(HttpRequestMessage request);
-	public string Handle(HttpRequestMessage request, HttpRequestConverterSettings? converterSettings = default);
+	public string Handle(HttpRequestMessage request, HttpRequestConverterSettings settings);
 }
