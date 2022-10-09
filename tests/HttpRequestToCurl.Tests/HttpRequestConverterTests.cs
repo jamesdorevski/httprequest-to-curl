@@ -1,5 +1,6 @@
 using System.Net.Mime;
 using System.Text;
+using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl.Tests;
 
@@ -10,14 +11,18 @@ public class HttpRequestConverterTests
 	{
 		var request = new HttpRequestMessage
 		{
-			RequestUri = new Uri("http://localhost:5002/WeatherForecast"),
+			RequestUri = new Uri("https://localhost:7126/WeatherForecast"),
 			Method = HttpMethod.Post,
 			Content = new StringContent("Hi there!", Encoding.UTF8, MediaTypeNames.Text.Plain)
 		};
 
 		request.Headers.Add("X-Hello", "world");
 
-		var actual = HttpRequestConverter.ConvertToCurl(request);
+		string actual = HttpRequestConverter.ConvertToCurl(request, new HttpRequestConverterSettings
+		{
+			AllowInsecureConnection = true
+		});
+		
 		Assert.NotEmpty(actual);
 	}
 }
