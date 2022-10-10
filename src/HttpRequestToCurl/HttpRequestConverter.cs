@@ -1,15 +1,16 @@
-﻿using System.Text;
-using HttpRequestToCurl.Handlers;
+﻿using HttpRequestToCurl.Handlers;
 using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl;
 
 public static class HttpRequestConverter
 {
-	private static readonly IEnumerable<IHandler> Handlers = AppDomain.CurrentDomain.GetAssemblies()
-		.SelectMany(x => x.GetTypes())
-		.Where(x => typeof(IHandler).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-		.Select(x => Activator.CreateInstance(x) as IHandler)!;
+	private static readonly IEnumerable<IHandler> Handlers = new IHandler[]
+	{
+		new CommandHandler(),
+		new HeadersHandler(),
+		new ContentHandler()
+	};
 
 	public static string ConvertToCurl(HttpRequestMessage request, HttpRequestConverterSettings? settings = null)
 	{

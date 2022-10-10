@@ -1,4 +1,3 @@
-using System.Text;
 using HttpRequestToCurl.Exceptions;
 using HttpRequestToCurl.Extensions;
 using HttpRequestToCurl.Models;
@@ -11,10 +10,7 @@ internal class CommandHandler : IHandler
 	private const string InsecureFlag = "--insecure ";
 	private const string MethodFlag = "--request ";
 
-	public bool CanHandle(HttpRequestMessage request)
-	{
-		return true;
-	}
+	public bool CanHandle(HttpRequestMessage request) => true;
 
 	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{

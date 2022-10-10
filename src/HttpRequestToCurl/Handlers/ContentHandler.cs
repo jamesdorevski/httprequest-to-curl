@@ -1,5 +1,4 @@
 using System.Net.Http.Headers;
-using System.Text;
 using HttpRequestToCurl.Extensions;
 using HttpRequestToCurl.Models;
 
@@ -9,17 +8,17 @@ internal class ContentHandler : IHandler
 {
 	private const string DataFlag = "--data ";
 
-	public bool CanHandle(HttpRequestMessage request)
-	{
-		return request.Content != null;
-	}
+	public bool CanHandle(HttpRequestMessage request) => request.Content != null;
 
 	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
-		if (request.Content != null) ContentHeadersToString(request.Content.Headers, ref sb);
+		if (request.Content?.Headers != null)
+			ContentHeadersToString(request.Content.Headers, ref sb);
+		
 		ContentToString(request.Content!, ref sb);
 	}
 
+	// TODO: map available content headers and strings to dictionary, enumerate over
 	private static void ContentHeadersToString(HttpContentHeaders contentHeaders, ref StringBuilder sb)
 	{
 		sb.Append(Constants.HeaderFlag);
@@ -33,7 +32,7 @@ internal class ContentHandler : IHandler
 
 	private static void ContentToString(HttpContent content, ref StringBuilder sb)
 	{
-		var body = content.ReadAsStringAsync().Result;
+		string body = content.ReadAsStringAsync().Result;
 
 		sb.Append(DataFlag);
 

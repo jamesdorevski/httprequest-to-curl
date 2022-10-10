@@ -1,4 +1,3 @@
-using System.Text;
 using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl.Handlers;

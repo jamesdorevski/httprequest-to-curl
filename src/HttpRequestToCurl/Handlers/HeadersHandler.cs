@@ -1,4 +1,3 @@
-using System.Text;
 using HttpRequestToCurl.Extensions;
 using HttpRequestToCurl.Models;
 
@@ -11,10 +10,7 @@ internal class HeadersHandler : IHandler
 		"Authorization"
 	};
 
-	public bool CanHandle(HttpRequestMessage request)
-	{
-		return request.Headers.Any();
-	}
+	public bool CanHandle(HttpRequestMessage request) => request.Headers.Any();
 
 	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
