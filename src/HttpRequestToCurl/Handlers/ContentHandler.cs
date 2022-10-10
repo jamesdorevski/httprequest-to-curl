@@ -1,9 +1,11 @@
 using System.Net.Http.Headers;
+using HttpRequestToCurl.Exceptions;
 using HttpRequestToCurl.Extensions;
 using HttpRequestToCurl.Models;
 
 namespace HttpRequestToCurl.Handlers;
 
+// Only support StringContent ATM, throw exception if otherwise
 internal class ContentHandler : IHandler
 {
 	private const string DataFlag = "--data ";
@@ -12,6 +14,9 @@ internal class ContentHandler : IHandler
 
 	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb)
 	{
+		if (request.Content.GetType().ToString() != "System.Net.Http.StringContent")
+			throw new UnsupportedContentTypeException();
+		
 		if (request.Content?.Headers != null)
 			ContentHeadersToString(request.Content.Headers, ref sb);
 		
