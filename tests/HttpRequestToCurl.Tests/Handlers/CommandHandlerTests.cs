@@ -27,11 +27,13 @@ public class CommandHandlerTests
 			Method = method
 		};
 		var sb = new StringBuilder();
-
-		_sut.Handle(request, new HttpRequestConverterSettings(), ref sb);
+		
+		if (_sut.CanHandle(request))
+			_sut.Handle(request, new HttpRequestConverterSettings(), ref sb);
+		
 		string actual = sb.ToString();
 
-		Assert.NotNull(actual);
+		Assert.NotEmpty(actual);
 		Assert.DoesNotContain("--insecure", actual);
 		Assert.Contains(expectedSubstring, actual);
 	}
@@ -44,7 +46,7 @@ public class CommandHandlerTests
 			Method = HttpMethod.Get
 		};
 		var sb = new StringBuilder();
-
+		
 		Assert.Throws<NullRequestUriException>(() => _sut.Handle(request, new HttpRequestConverterSettings(), ref sb));
 	}
 
@@ -64,10 +66,12 @@ public class CommandHandlerTests
 		
 		var sb = new StringBuilder();
 		
-		_sut.Handle(request, settings, ref sb);
+		if (_sut.CanHandle(request))
+			_sut.Handle(request, settings, ref sb);
+		
 		string actual = sb.ToString();
 		
-		Assert.NotNull(actual);
+		Assert.NotEmpty(actual);
 		Assert.Contains("--insecure", actual);
 	}
 }
