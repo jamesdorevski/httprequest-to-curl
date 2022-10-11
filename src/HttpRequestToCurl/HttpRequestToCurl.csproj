@@ -9,6 +9,8 @@
         <Version>0.1.0</Version>
         <Authors>James Dorevski</Authors>
         <Product>HttpRequestToCurl</Product>
+        <Description>Convert HttpRequestMessage objects into cURL commands</Description>
+        <PackageTags>curl;http;requests</PackageTags>
     </PropertyGroup>
         
     <ItemGroup>
