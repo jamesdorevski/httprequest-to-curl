@@ -1,6 +1,7 @@
-namespace HttpRequestToCurl.Exceptions;
-
-public class UnsupportedContentTypeException : Exception
+namespace HttpRequestToCurl.Exceptions
 {
-	public UnsupportedContentTypeException() : base("Unsupported HttpRequestMessage Content Type. Only StringContent is supported") {}
+	public class UnsupportedContentTypeException : Exception
+	{
+		public UnsupportedContentTypeException() : base("Unsupported HttpRequestMessage Content Type. Only StringContent is supported") {}
+	}
 }

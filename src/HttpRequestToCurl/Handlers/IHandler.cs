@@ -1,9 +1,11 @@
+using System.Text;
 using HttpRequestToCurl.Models;
 
-namespace HttpRequestToCurl.Handlers;
-
-internal interface IHandler
+namespace HttpRequestToCurl.Handlers
 {
-	public bool CanHandle(HttpRequestMessage request);
-	public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb);
+	internal interface IHandler
+	{
+		public bool CanHandle(HttpRequestMessage request);
+		public void Handle(HttpRequestMessage request, HttpRequestConverterSettings settings, ref StringBuilder sb);
+	}
 }

@@ -1,11 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <RepositoryUrl>https://github.com/jamesdorevski/httprequest-to-curl</RepositoryUrl>
+        <PackageId>HttpRequestToCurl</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>James Dorevski</Authors>
+        <Product>HttpRequestToCurl</Product>
     </PropertyGroup>
-
+        
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>HttpRequestToCurl.Tests</_Parameter1>

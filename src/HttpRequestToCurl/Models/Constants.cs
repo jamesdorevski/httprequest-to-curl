@@ -1,6 +1,7 @@
-namespace HttpRequestToCurl.Models;
-
-internal static class Constants
+namespace HttpRequestToCurl.Models
 {
-	public const string HeaderFlag = "--header ";
+	internal static class Constants
+	{
+		public const string HeaderFlag = "--header ";
+	}
 }
