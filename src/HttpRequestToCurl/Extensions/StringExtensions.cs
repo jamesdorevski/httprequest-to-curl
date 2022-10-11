@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace HttpRequestToCurl.Extensions
 {
 	public static class StringExtensions

@@ -1,3 +1,5 @@
+using System;
+
 namespace HttpRequestToCurl.Exceptions
 {
 	internal class NullRequestUriException : Exception

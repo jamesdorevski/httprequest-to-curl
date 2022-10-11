@@ -1,3 +1,5 @@
+using System;
+
 namespace HttpRequestToCurl.Exceptions
 {
 	public class UnsupportedContentTypeException : Exception
