@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        uses: dotnet build --configuration Release
+        run: dotnet build --configuration Release
       - name: Test
         run: dotnet test --configuration Release --no-build
     
