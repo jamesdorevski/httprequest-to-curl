@@ -72,5 +72,28 @@ namespace HttpRequestToCurl.Tests.Handlers
 			string actual = sb.ToString();
 			Assert.Empty(actual);
 		}
+
+		[Fact]
+		public void HttpRequestMessageWithHeaders_ShouldProcess()
+		{
+			string expected = "--header 'Accept: application/json' --header 'X-Custom-Header: Custom-Value' ";
+			
+			var request = new HttpRequestMessage
+			{
+				Headers =
+				{
+					Accept = { new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json) },
+				}
+			};
+			request.Headers.Add("X-Custom-Header", "Custom-Value");
+
+			var sb = new StringBuilder();
+			
+			if (_sut.CanHandle(request))
+				_sut.Handle(request, new HttpRequestConverterSettings(), ref sb);
+
+			string actual = sb.ToString();
+			Assert.Equal(expected, actual);
+		}
 	}
 }

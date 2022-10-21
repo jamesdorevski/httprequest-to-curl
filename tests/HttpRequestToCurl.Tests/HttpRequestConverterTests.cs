@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using HttpRequestToCurl.Models;
@@ -42,6 +43,25 @@ namespace HttpRequestToCurl.Tests
 			var actual = HttpRequestConverter.ConvertToCurl(request);
 			
 			Assert.Equal(expected, actual);
+		}
+
+		[Fact]
+		public void OmittingHttpRequestConverterSettings_SetsDefaultSettings()
+		{
+			var request = new HttpRequestMessage
+			{
+				RequestUri = new Uri("https://www.example.com"),
+				Method = HttpMethod.Get,
+				Headers =
+				{
+					Authorization = new AuthenticationHeaderValue("Bearer", "bear")
+				}
+			};
+
+			var actual = HttpRequestConverter.ConvertToCurl(request);
+			
+			Assert.DoesNotContain("--insecure", actual);
+			Assert.DoesNotContain("--header 'Authorization: Bearer bear'", actual);
 		}
 	}
 }

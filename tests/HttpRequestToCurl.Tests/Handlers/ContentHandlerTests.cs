@@ -16,6 +16,10 @@ namespace HttpRequestToCurl.Tests.Handlers
 			new object[]
 			{
 				new StringContent("Hello world!", Encoding.UTF8, MediaTypeNames.Application.Json), "--header 'Content-Type: application/json' --data '\"Hello world!\"'",
+			},
+			new object[]
+			{
+				new StringContent(new {Hello = "World", Complex = "Object"}.ToString(), Encoding.UTF8, MediaTypeNames.Application.Json), "--header 'Content-Type: application/json' --data '\"{ Hello = World, Complex = Object }\"' "
 			}
 		};
 
