@@ -7,8 +7,10 @@ namespace HttpRequestToCurl.Tests
 	public class HttpRequestConverterTests
 	{
 		[Fact]
-		public void ConvertsGetRequestSuccessfully()
+		public void ConvertsPostRequest()
 		{
+			string expected = "curl --insecure --request POST 'https://localhost:7126/WeatherForecast' --header 'X-Hello: world' --header 'Content-Type: application/json' --data '\"Hi there!\"' ";
+			
 			var request = new HttpRequestMessage
 			{
 				RequestUri = new Uri("https://localhost:7126/WeatherForecast"),
@@ -23,7 +25,23 @@ namespace HttpRequestToCurl.Tests
 				AllowInsecureConnections = true
 			});
 
-			Assert.NotEmpty(actual);
+			Assert.Equal(expected, actual);
+		}
+
+		[Fact]
+		public void ConvertsGetRequest()
+		{
+			string expected = "curl --request GET 'https://www.example.com/v1/hi' ";
+			
+			var request = new HttpRequestMessage
+			{
+				RequestUri = new Uri("https://www.example.com/v1/hi"),
+				Method = HttpMethod.Get
+			};
+
+			var actual = HttpRequestConverter.ConvertToCurl(request);
+			
+			Assert.Equal(expected, actual);
 		}
 	}
 }
