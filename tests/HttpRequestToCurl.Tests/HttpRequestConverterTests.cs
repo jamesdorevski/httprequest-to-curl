@@ -21,10 +21,12 @@ namespace HttpRequestToCurl.Tests
 
 			request.Headers.Add("X-Hello", "world");
 
-			var actual = HttpRequestConverter.ConvertToCurl(request, new HttpRequestConverterSettings
+			var settings = new HttpRequestConverterSettings
 			{
-				AllowInsecureConnections = true
-			});
+				AllowInsecureConnections = true,
+			};
+
+			var actual = HttpRequestConverter.ConvertToCurl(request, settings);
 
 			Assert.Equal(expected, actual);
 		}

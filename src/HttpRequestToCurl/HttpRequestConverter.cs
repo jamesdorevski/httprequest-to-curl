@@ -16,6 +16,12 @@ namespace HttpRequestToCurl
     		new ContentHandler()
     	};
     
+        /// <summary>
+        /// Converts a HttpRequestMessageObject to its cURL equivalent.
+        /// </summary>
+        /// <param name="request">HttpRequestMessage to convert to cURL.</param>
+        /// <param name="settings">Optional settings object.</param>
+        /// <returns>cURL string equivalent of the input.</returns>
     	public static string ConvertToCurl(HttpRequestMessage request, HttpRequestConverterSettings? settings = null)
     	{
     		var sb = new StringBuilder();

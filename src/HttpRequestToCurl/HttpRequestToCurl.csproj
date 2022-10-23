@@ -5,7 +5,6 @@
         <Nullable>enable</Nullable>
         <RepositoryUrl>https://github.com/jamesdorevski/httprequest-to-curl</RepositoryUrl>
         <PackageId>HttpRequestToCurl</PackageId>
-        <Version>0.1.0</Version>
         <Authors>James Dorevski</Authors>
         <Product>HttpRequestToCurl</Product>
         <Description>Convert HttpRequestMessage objects into cURL commands</Description>
