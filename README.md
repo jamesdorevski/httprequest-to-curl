@@ -1,6 +1,6 @@
 # HttpRequestToCurl
 
-A simple `.NET Standard 2.1` library to convert `HttpRequestMessage` objects into their cURL command equivalent for easy sharing of payloads. 
+A simple `.NET Standard 2.1` library to convert `HttpRequestMessage` objects into cURL for easy sharing of payloads. 
 
 ## Usage
 
