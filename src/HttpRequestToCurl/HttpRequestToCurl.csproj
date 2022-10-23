@@ -3,12 +3,12 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
-        <RepositoryUrl>https://github.com/jamesdorevski/httprequest-to-curl</RepositoryUrl>
         <PackageId>HttpRequestToCurl</PackageId>
         <Authors>James Dorevski</Authors>
-        <Product>HttpRequestToCurl</Product>
         <Description>Convert HttpRequestMessage objects into cURL commands</Description>
+        <PackageProjectUrl>https://github.com/jamesdorevski/httprequest-to-curl</PackageProjectUrl>
         <PackageTags>curl;http;requests</PackageTags>
+        <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     </PropertyGroup>
         
     <ItemGroup>
