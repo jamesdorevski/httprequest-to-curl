@@ -53,4 +53,4 @@ Available settings and their defaults:
 
 ## Limitations
 
-- Only supports `StringContent` bodies as of now`
+- Only supports `StringContent` bodies as of now
